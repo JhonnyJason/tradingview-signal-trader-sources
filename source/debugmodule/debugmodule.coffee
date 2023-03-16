@@ -1,4 +1,11 @@
+import { addModulesToDebug } from "thingy-debug"
+
 ############################################################
-export modulesToDebug = 
-    unbreaker: true
-    # scimodule: true
+export modulesToDebug =
+
+    configmodule: true
+    scimodule: true
+    servicefunctionsmodule: true
+    signalhandlermodule: true
+    
+addModulesToDebug(modulesToDebug)
