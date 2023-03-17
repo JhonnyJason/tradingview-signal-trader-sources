@@ -5,6 +5,9 @@ import { createLogFunctions } from "thingy-debug"
 #endregion
 
 ############################################################
+import * as data from "cached-persistentstate"
+
+############################################################
 # default config
 allConfig = {
     authToken: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
@@ -15,8 +18,26 @@ allConfig = {
 
     telegramToken: ""
     tekegranChatId: ""
+
+    krakenKey: ""
+    krakenSecret: ""
+
+    binanceKey: ""
+    binanceSecret: ""
 }
 
+############################################################
+defaultState = {
+    signalHandlerState: {
+        inOrOut: 0 # 0 is OUT
+    }
+}
+
+dataOptions = {
+    defaultState: defaultState
+    basePath: "../state"
+    maxCacheSize: 32
+}
 
 ############################################################
 import fs from "fs"
@@ -30,6 +51,7 @@ ready = new Promise((resolve) -> readySignal = resolve)
 ############################################################
 export initialize = ->
     log "initialize"
+    data.initialize(dataOptions)
     configPathRelative = "../config.json"
     configFilePath = path.resolve(process.cwd(), configPathRelative)
     try
