@@ -1,26 +1,28 @@
 ############################################################
-#region printLogFunctions
-log = (arg) ->
-    if allModules.debugmodule.modulesToDebug["scimodule"]?  then console.log "[scimodule]: " + arg
-    return
-ostr = (obj) -> JSON.stringify(obj, null, 4)
-olog = (obj) -> log "\n" + ostr(obj)
-print = (arg) -> console.log(arg)
+#region debug
+import { createLogFunctions } from "thingy-debug"
+{log, olog} = createLogFunctions("scimodule")
 #endregion
 
 ############################################################
 #region modules from the Environment
 import * as sciBase from "thingy-sci-base"
-# import * as routes from ""
-# import * as handlers from ""
+
+############################################################
+import * as c from "./configmodule.js"
+import { onSignal, getStatus } from "./servicefunctionsmodule.js"
+
 #endregion
 
 ############################################################
 export prepareAndExpose = ->
-    log "scimodule.prepareAndExpose"
-    # handlers.setService(this)
-    # sciBase.prepareAndExpose(authenticate, routes)
+    log "prepareAndExpose"
+    
+    routeName = c.get("webhookRoute")
+    restRoutes = {}
+    restRoutes[routeName] = onSignal
+    restRoutes["getStatus"] = getStatus
+    
+    sciBase.prepareAndExpose(null, restRoutes)
+    
     return
-
-############################################################
-# authenticate = 

@@ -10,6 +10,7 @@ allConfig = {
     authToken: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
     webhookRoute: "deadbeefdeadbeefdeadbeefdeadbeef"
     initialBagSize: 100
+    maxBagSize: 300
 }
 
 
