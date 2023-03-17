@@ -51,7 +51,9 @@ export initialize = ->
 buyOnKraken = ->
     return unless krakenClient?
     log "buyOnKraken"
-    
+    log "not executed!"
+    return
+
     volume = 1.0 * krakenBag / krakenPriceBTCEUR
     
     pair = krakePairId
@@ -89,7 +91,8 @@ buyOnKraken = ->
 sellOnKraken = ->
     return unless krakenClient?
     log "sellOnKraken"
-
+    log "not executed!"
+    return
     volumeBTC = 1.0 * krakenBag / krakenPriceBTCEUR
 
     pair = krakePairId
