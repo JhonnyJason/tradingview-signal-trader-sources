@@ -25,11 +25,26 @@ isAuthorized = (req) ->
     if req.body.token != authToken then return false
     return true
 
-
+emulate404 = (req)->
+    route = req.path
+    msgHTML = """
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="utf-8">
+        <title>Error</title>
+        </head>
+        <body>
+        <pre>Cannot POST /#{route}</pre>
+        </body>
+        </html>
+    """
+    res.status(404).send(msgHTML)
+    return
 ############################################################
 export onSignal = (req, res) ->
     log "onSignal"
-    if !isAuthorized(req) then return res.status(401).send("")
+    if !isAuthorized(req) then return emulate404(req)
     log "successfully authorized"
     olog req.body
     signalHandler.handleSignal(req.body)
