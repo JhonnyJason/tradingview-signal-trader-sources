@@ -5,6 +5,7 @@ import { createLogFunctions } from "thingy-debug"
 #endregion
 
 ############################################################
+import * as signalHandler from "./signalhandlermodule.js"
 import * as c from "./configmodule.js"
 
 ############################################################
@@ -31,7 +32,7 @@ export onSignal = (req, res) ->
     if !isAuthorized(req) then return res.status(401).send("")
     log "successfully authorized"
     olog req.body
-    ## TODO implement
+    signalHandler.handleSignal(req.body)
     return res.status(202).send("")
 
 ############################################################

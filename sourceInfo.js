@@ -1,7 +1,8 @@
 module.exports = {
     getDependencies: () => {
         return {
-	    "thingy-sci-base":"^0.0.8"
+            "slimbot": "^5.1.0",
+	        "thingy-sci-base":"^0.0.8"
         }
     }
 }

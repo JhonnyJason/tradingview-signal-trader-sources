@@ -5,7 +5,16 @@ import { createLogFunctions } from "thingy-debug"
 #endregion
 
 ############################################################
-export initialize = ->
-    log "initialize"
-    #Implement or Remove :-)
+import { send as tgSend } from "./telegrambotmodule.js"
+
+############################################################
+export handleSignal = (signal) ->
+    log "handleSignal"
+    message = "Signal received!\n #{JSON.stringify(signal, null, 4)}"
+    tgSend(message)
+    
+    ## TODO implement
     return
+
+
+

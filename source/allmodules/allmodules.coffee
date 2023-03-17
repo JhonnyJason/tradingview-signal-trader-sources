@@ -5,6 +5,7 @@ import * as scimodule from "./scimodule.js"
 import * as servicefunctionsmodule from "./servicefunctionsmodule.js"
 import * as signalhandlermodule from "./signalhandlermodule.js"
 import * as startupmodule from "./startupmodule.js"
+import * as telegrambotmodule from "./telegrambotmodule.js"
 
 Modules = {
     configmodule,
@@ -14,6 +15,7 @@ Modules = {
     servicefunctionsmodule,
     signalhandlermodule,
     startupmodule,
+    telegrambotmodule,
 }
 
 export default Modules

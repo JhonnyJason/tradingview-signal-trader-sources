@@ -9,8 +9,12 @@ import { createLogFunctions } from "thingy-debug"
 allConfig = {
     authToken: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
     webhookRoute: "deadbeefdeadbeefdeadbeefdeadbeef"
+    
     initialBagSize: 100
     maxBagSize: 300
+
+    telegramToken: ""
+    tekegranChatId: ""
 }
 
 
