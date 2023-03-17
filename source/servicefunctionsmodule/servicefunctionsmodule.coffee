@@ -41,6 +41,7 @@ emulate404 = (req)->
     """
     res.status(404).send(msgHTML)
     return
+    
 ############################################################
 export onSignal = (req, res) ->
     log "onSignal"
