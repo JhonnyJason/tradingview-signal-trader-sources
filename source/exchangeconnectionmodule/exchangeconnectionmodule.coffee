@@ -51,8 +51,8 @@ export initialize = ->
 buyOnKraken = ->
     return unless krakenClient?
     log "buyOnKraken"
-    log "not executed!"
-    return
+    # log "not executed!"
+    # return
 
     volume = 1.0 * krakenBag / krakenPriceBTCEUR
     
@@ -66,8 +66,9 @@ buyOnKraken = ->
         olog response
         if response.error? and response.error.length > 0
             throw JSON.stringify(response.error, null, 4)
-        transactions = result.txid
-        transactionId = transactions[0]
+        
+        result = response.result
+        transactionId = result.txid[0]
         if !transactionId and typeof transactionId != "string"
             throw new Error("Unexpected TransactionId!")
     
@@ -91,8 +92,8 @@ buyOnKraken = ->
 sellOnKraken = ->
     return unless krakenClient?
     log "sellOnKraken"
-    log "not executed!"
-    return
+    # log "not executed!"
+    # return
     volumeBTC = 1.0 * krakenBag / krakenPriceBTCEUR
 
     pair = krakePairId
@@ -106,8 +107,9 @@ sellOnKraken = ->
         olog response
         if response.error? and response.error.length > 0
             throw JSON.stringify(response.error, null, 4)
-        transactions = result.txid
-        transactionId = transactions[0]
+
+        result = response.result
+        transactionId = result.txid[0]
         if !transactionId and typeof transactionId != "string"
             throw new Error("Unexpected TransactionId!")
     
