@@ -73,9 +73,6 @@ buyOnKraken = ->
             throw new Error("Unexpected TransactionId!")
     
         txid = transactionId
-        # # "O7PUC6-SJHUW-FOMDUZ"
-        # # "OSACNP-ZDWVD-MFG5TQ"
-        # txid = "O5U7ZT-EQ23D-CT4GF7"
         data = { txid }
         response = await krakenClient.api("QueryOrders", data)
         olog response
@@ -114,9 +111,6 @@ sellOnKraken = ->
             throw new Error("Unexpected TransactionId!")
     
         txid = transactionId
-        # # "O7PUC6-SJHUW-FOMDUZ"
-        # # "OSACNP-ZDWVD-MFG5TQ"
-        # txid = "O5U7ZT-EQ23D-CT4GF7"
         data = { txid }
         response = await krakenClient.api("QueryOrders", data)
         olog response
