@@ -9,3 +9,8 @@ export initialize = ->
     log "initialize"
     #Implement or Remove :-)
     return
+
+############################################################
+export prepareConnections = ->
+    log "prepareConnections"
+    return

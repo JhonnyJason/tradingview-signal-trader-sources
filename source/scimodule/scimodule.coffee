@@ -9,7 +9,7 @@ import { createLogFunctions } from "thingy-debug"
 import * as sciBase from "thingy-sci-base"
 
 ############################################################
-import * as c from "./configmodule.js"
+import * as cfg from "./configmodule.js"
 import { onSignal, getStatus } from "./servicefunctionsmodule.js"
 
 #endregion
@@ -17,12 +17,12 @@ import { onSignal, getStatus } from "./servicefunctionsmodule.js"
 ############################################################
 export prepareAndExpose = ->
     log "prepareAndExpose"
-    
-    routeName = c.get("webhookRoute")
     restRoutes = {}
-    restRoutes[routeName] = onSignal
-    restRoutes["getStatus"] = getStatus
     
+    routeName = cfg.get("webhookRoute")
+    restRoutes[routeName] = onSignal
+    # restRoutes["getStatus"] = getStatus
+
     sciBase.prepareAndExpose(null, restRoutes)
     
     return
