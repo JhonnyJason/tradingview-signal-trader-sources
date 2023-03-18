@@ -21,7 +21,8 @@ krakenPriceBTCEUR = 25000.0
 
 binanceClient = null
 binanceBag = 0
-binancePairId = ""
+binancePairId = "BTCUSDT"
+binancePriceBTCEUR = 25000.0
 
 initialBagSize = 0
 maxBagSize = 0
@@ -42,7 +43,7 @@ export initialize = ->
     apiKey = c.get("binanceKey")
     apiSecret = c.get("binanceSecret")
     if apiKey and apiSecret
-        binanceClient = new Spot(apiKey, apiSecret)
+        binanceClient = new Spot(apiKey, apiSecret, { baseURL: 'https://testnet.binance.vision' })
         binanceBag = initialBagSize
     return
 
@@ -51,15 +52,15 @@ export initialize = ->
 buyOnKraken = ->
     return unless krakenClient?
     log "buyOnKraken"
-    log "not executed!"
-    return
+    # log "not executed!"
+    # return
 
-    volume = 1.0 * krakenBag / krakenPriceBTCEUR
+    volumeBTC = 1.0 * krakenBag / krakenPriceBTCEUR
     
     pair = krakePairId
     type = "buy"
     ordertype = "market"
-    volume = volume.toFixed(8)
+    volume = volumeBTC.toFixed(8)
     data = { pair, type, ordertype, volume }
     try
         response = await krakenClient.api("AddOrder", data)
@@ -89,8 +90,8 @@ buyOnKraken = ->
 sellOnKraken = ->
     return unless krakenClient?
     log "sellOnKraken"
-    log "not executed!"
-    return
+    # log "not executed!"
+    # return
     volumeBTC = 1.0 * krakenBag / krakenPriceBTCEUR
 
     pair = krakePairId
@@ -129,14 +130,124 @@ sellOnKraken = ->
 ############################################################
 buyOnBinance = ->
     log "buyOnBinance"
-    log "not implemented yet!"
-    ## TODO implement
+
+    volumeBTC = 1.0 * binanceBag / binancePriceBTCEUR 
+    
+    pair = binancePairId
+    type = "BUY"
+    ordertype = "MARKET"
+    quantity = volumeBTC.toFixed(8)
+    data = { quantity }
+
+    try
+        response = await binanceClient.newOrder(krakePairId, type, ordertype, data)
+        olog response
+        # {
+        # "symbol": "BTCUSDT",
+        # "orderId": 28,
+        # "orderListId": -1,
+        # "clientOrderId": "6gCrw2kRUAF9CvJDGP16IP",
+        # "transactTime": 1507725176595
+        # }
+
+        orderId = response.orderId
+        data = { orderId }
+        response = await binanceClient.getOrder(pair, data)
+        olog response
+        # {
+        #     "symbol": "LTCBTC",
+        #     "orderId": 1,
+        #     "orderListId": -1,
+        #     "clientOrderId": "myOrder1",
+        #     "price": "0.1",
+        #     "origQty": "1.0",
+        #     "executedQty": "0.0",
+        #     "cummulativeQuoteQty": "0.0",
+        #     "status": "NEW",
+        #     "timeInForce": "GTC",
+        #     "type": "LIMIT",
+        #     "side": "BUY",
+        #     "stopPrice": "0.0",
+        #     "icebergQty": "0.0",
+        #     "time": 1499827319559,
+        #     "updateTime": 1499827319559,
+        #     "isWorking": true,
+        #     "origQuoteOrderQty": "0.00000000"
+        # }
+
+        status = response.status
+        price = response.price
+        vol = response.origQty
+        vol_exec = response.executedQty
+        cost = "unknown"
+        fee = "unknown"
+
+        txObj = { status, vol, vol_exec, price, cost, fee, type, pair }
+
+        recorder.track("binance", txObj)
+
+    catch err then log err
     return
 
 sellOnBinance = ->
     log "sellOnBinance"
-    log "not implemented yet!"
-    ## TODO implement
+
+    volumeBTC = 1.0 * binanceBag / binancePriceBTCEUR 
+    
+    pair = binancePairId
+    type = "SELL"
+    ordertype = "MARKET"
+    quantity = volumeBTC.toFixed(8)
+    data = { quantity }
+
+    try
+        response = await binanceClient.newOrder(krakePairId, type, ordertype, data)
+        olog response
+        # {
+        # "symbol": "BTCUSDT",
+        # "orderId": 28,
+        # "orderListId": -1,
+        # "clientOrderId": "6gCrw2kRUAF9CvJDGP16IP",
+        # "transactTime": 1507725176595
+        # }
+
+        orderId = response.orderId
+        data = { orderId }
+        response = await binanceClient.getOrder(pair, data)
+        olog response
+        # {
+        #     "symbol": "LTCBTC",
+        #     "orderId": 1,
+        #     "orderListId": -1,
+        #     "clientOrderId": "myOrder1",
+        #     "price": "0.1",
+        #     "origQty": "1.0",
+        #     "executedQty": "0.0",
+        #     "cummulativeQuoteQty": "0.0",
+        #     "status": "NEW",
+        #     "timeInForce": "GTC",
+        #     "type": "LIMIT",
+        #     "side": "BUY",
+        #     "stopPrice": "0.0",
+        #     "icebergQty": "0.0",
+        #     "time": 1499827319559,
+        #     "updateTime": 1499827319559,
+        #     "isWorking": true,
+        #     "origQuoteOrderQty": "0.00000000"
+        # }
+
+        status = response.status
+        price = response.price
+        vol = response.origQty
+        vol_exec = response.executedQty
+        cost = "unknown"
+        fee = "unknown"
+
+        txObj = { status, vol, vol_exec, price, cost, fee, type, pair }
+
+        recorder.track("binance", txObj)
+
+    catch err then log err
     return
 
 ############################################################
