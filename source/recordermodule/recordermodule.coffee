@@ -24,8 +24,8 @@ export track = (exchange, txObj) ->
         cost = txObj.cost
         fee = txObj.fee
         
-        type = txObj.descr.type
-        pair = txObj.descr.pair
+        type = txObj.type || txObj.descr.type
+        pair = txObj.pair || txObj.descr.pair
 
         
         message = """
