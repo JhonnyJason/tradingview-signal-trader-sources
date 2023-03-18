@@ -43,7 +43,7 @@ export initialize = ->
     apiKey = c.get("binanceKey")
     apiSecret = c.get("binanceSecret")
     if apiKey and apiSecret
-        binanceClient = new Spot(apiKey, apiSecret, { baseURL: 'https://testnet.binance.vision' })
+        binanceClient = new Spot(apiKey, apiSecret)
         binanceBag = initialBagSize
     return
 
@@ -92,6 +92,7 @@ sellOnKraken = ->
     log "sellOnKraken"
     # log "not executed!"
     # return
+
     volumeBTC = 1.0 * krakenBag / krakenPriceBTCEUR
 
     pair = krakePairId
