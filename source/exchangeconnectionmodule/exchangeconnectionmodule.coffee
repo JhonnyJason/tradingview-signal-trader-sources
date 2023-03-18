@@ -141,7 +141,7 @@ buyOnBinance = ->
     data = { quantity }
 
     try
-        response = await binanceClient.newOrder(krakePairId, type, ordertype, data)
+        response = await binanceClient.newOrder(pair, type, ordertype, data)
         olog response
         # {
         # "symbol": "BTCUSDT",
@@ -202,7 +202,7 @@ sellOnBinance = ->
     data = { quantity }
 
     try
-        response = await binanceClient.newOrder(krakePairId, type, ordertype, data)
+        response = await binanceClient.newOrder(pair, type, ordertype, data)
         olog response
         # {
         # "symbol": "BTCUSDT",
