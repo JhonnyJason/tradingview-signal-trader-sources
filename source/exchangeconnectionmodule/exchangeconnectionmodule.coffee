@@ -142,7 +142,8 @@ buyOnBinance = ->
 
     try
         response = await binanceClient.newOrder(pair, type, ordertype, data)
-        olog response
+        result = response.data
+        olog result
         # {
         # "symbol": "BTCUSDT",
         # "orderId": 28,
@@ -151,10 +152,11 @@ buyOnBinance = ->
         # "transactTime": 1507725176595
         # }
 
-        orderId = response.orderId
+        orderId = result.orderId
         data = { orderId }
         response = await binanceClient.getOrder(pair, data)
-        olog response
+        result = response.data
+        olog result
         # {
         #     "symbol": "LTCBTC",
         #     "orderId": 1,
@@ -176,10 +178,10 @@ buyOnBinance = ->
         #     "origQuoteOrderQty": "0.00000000"
         # }
 
-        status = response.status
-        price = response.price
-        vol = response.origQty
-        vol_exec = response.executedQty
+        status = result.status
+        price = result.price
+        vol = result.origQty
+        vol_exec = result.executedQty
         cost = "unknown"
         fee = "unknown"
 
@@ -203,7 +205,8 @@ sellOnBinance = ->
 
     try
         response = await binanceClient.newOrder(pair, type, ordertype, data)
-        olog response
+        result = response.data
+        olog result
         # {
         # "symbol": "BTCUSDT",
         # "orderId": 28,
@@ -212,10 +215,11 @@ sellOnBinance = ->
         # "transactTime": 1507725176595
         # }
 
-        orderId = response.orderId
+        orderId = result.orderId
         data = { orderId }
         response = await binanceClient.getOrder(pair, data)
-        olog response
+        result = response.data
+        olog result
         # {
         #     "symbol": "LTCBTC",
         #     "orderId": 1,
@@ -237,10 +241,10 @@ sellOnBinance = ->
         #     "origQuoteOrderQty": "0.00000000"
         # }
 
-        status = response.status
-        price = response.price
-        vol = response.origQty
-        vol_exec = response.executedQty
+        status = result.status
+        price = result.price
+        vol = result.origQty
+        vol_exec = result.executedQty
         cost = "unknown"
         fee = "unknown"
 
