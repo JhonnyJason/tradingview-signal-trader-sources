@@ -182,8 +182,14 @@ buyOnBinance = ->
         price = result.price
         vol = result.origQty
         vol_exec = result.executedQty
-        cost = "unknown"
-        fee = "unknown"
+        cost = result.cummulativeQuoteQty
+        fee = 0
+
+        volFloat = parseFloat(vol)
+        costFloat = parseFloat(cost)
+
+        if !fee then fee = 0.001 * costFloat
+        if !price then price = costFloat / volFloat
 
         txObj = { status, vol, vol_exec, price, cost, fee, type, pair }
 
@@ -245,8 +251,14 @@ sellOnBinance = ->
         price = result.price
         vol = result.origQty
         vol_exec = result.executedQty
-        cost = "unknown"
-        fee = "unknown"
+        cost = result.cummulativeQuoteQty
+        fee = 0
+
+        volFloat = parseFloat(vol)
+        costFloat = parseFloat(cost)
+
+        if !fee then fee = 0.001 * costFloat
+        if !price then price = costFloat / volFloat
 
         txObj = { status, vol, vol_exec, price, cost, fee, type, pair }
 
